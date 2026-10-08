@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rakesh P. Tapaskar</title>
+<meta name="description" content="Dr. Rakesh P. Tapaskar (Dr. Rocky): engineer, inventor, educator and founder. Director of the Center for Automation and Robotics Research (CARR Lab), KLE Technological University.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Hanken+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>try{var t=localStorage.getItem('rpt-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<style>
+/* Layout: an inventor's HUD. Full-bleed live canvas hero, a reactor-core dossier, then record, origin, workshop, frontiers, classroom. Mono telemetry labels tie it together. Dark by default; light on request. */
+:root{
+  color-scheme: dark;
+  --ink:#0A0D13;  --panel:#10151E;  --line:#222B39;
+  --fg:#E9EDF3;   --muted:#8792A5;
+  --accent:#E8262F;   /* hot-rod red */
+  --gold:#F4B740;     /* armour gold */
+  --signal:#5FE6FF;   /* repulsor cyan */
+  --ok:#3BE38C;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --nav-h:60px;
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --ink:#EDF0F4;  --panel:#FFFFFF;  --line:#D2D8E1;
+  --fg:#0B0F17;   --muted:#566176;
+  --accent:#C4161F;
+  --gold:#A8700A;
+  --signal:#0083A8;
+  --ok:#0E8848;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--fg);font:400 17px/1.6 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:clip;transition:background .35s,color .35s}
+a{color:inherit}
+::selection{background:var(--accent);color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1320px;margin-inline:auto;padding-inline:clamp(16px,4vw,56px)}
+.label{font:500 12px/1.4 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.label b{color:var(--accent);font-weight:500}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;padding-top:env(safe-area-inset-top,0px);background:color-mix(in srgb,var(--ink) 76%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:24px;height:var(--nav-h)}
+.logo{display:flex;align-items:baseline;gap:6px;text-decoration:none}
+.logo b{font:900 26px/1 var(--f-display);letter-spacing:.02em}
+.logo span{font:400 12px var(--f-mono);color:var(--muted)}
+.nav nav{display:flex;gap:20px;margin-left:auto}
+.nav nav a{font:500 12px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}
+.nav nav a:hover{color:var(--fg)}
+.theme-btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--line);background:transparent;color:var(--fg);font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+.theme-btn svg{width:15px;height:15px}
+.theme-btn .sun{display:none}
+:root[data-theme="light"] .theme-btn .sun{display:block}
+:root[data-theme="light"] .theme-btn .moon{display:none}
+@media (max-width:940px){.nav nav a:not(.keep){display:none}}
+@media (max-width:420px){.theme-btn span{display:none}}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block;animation:ping 2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent)}70%,100%{box-shadow:0 0 0 8px transparent}}
+
+/* HERO */
+#hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);touch-action:pan-y;
+  padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px) + clamp(28px,5vw,64px));
+  background:
+    radial-gradient(ellipse 60% 55% at 78% 82%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 70%),
+    radial-gradient(ellipse 45% 40% at 15% 20%,color-mix(in srgb,var(--gold) 8%,transparent),transparent 70%),
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/48px 48px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/48px 48px,
+    var(--ink)}
+#hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--ink) 0%,transparent 30%,transparent 70%,var(--ink) 100%);opacity:.75;pointer-events:none}
+#heroCv{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.hero-inner{position:relative;z-index:2;display:grid;gap:18px;pointer-events:none}
+.hero-inner a{pointer-events:auto}
+.boot{font:400 13px/1.5 var(--f-mono);color:var(--muted);min-height:1.5em;overflow-wrap:anywhere}
+.boot .ok{color:var(--ok)}
+.caret{display:inline-block;width:.55em;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+h1{margin:0;font:900 clamp(58px,11.5vw,176px)/.84 var(--f-display);text-transform:uppercase;text-wrap:balance}
+h1 .dr{display:block;font-size:.28em;line-height:1;letter-spacing:.12em;color:var(--gold);margin-bottom:.18em}
+.corner{position:absolute;width:34px;height:34px;z-index:3;pointer-events:none;border-color:var(--gold);border-style:solid;opacity:.8}
+.corner.tl{top:calc(var(--nav-h) + env(safe-area-inset-top,0px) + 14px);left:14px;border-width:2px 0 0 2px}
+.corner.tr{top:calc(var(--nav-h) + env(safe-area-inset-top,0px) + 14px);right:14px;border-width:2px 2px 0 0}
+.corner.bl{bottom:14px;left:14px;border-width:0 0 2px 2px}
+.corner.br{bottom:14px;right:14px;border-width:0 2px 2px 0}
+.pwr{display:flex;align-items:center;gap:8px;font:500 11px var(--f-mono);letter-spacing:.1em;color:var(--muted);white-space:nowrap}
+.pwr .cells{display:flex;gap:2px}
+.pwr .cells i{width:5px;height:12px;background:var(--gold);opacity:.9;animation:cell 2.4s ease-in-out infinite}
+.pwr .cells i:nth-child(2){animation-delay:.15s}.pwr .cells i:nth-child(3){animation-delay:.3s}.pwr .cells i:nth-child(4){animation-delay:.45s}.pwr .cells i:nth-child(5){animation-delay:.6s}
+@keyframes cell{50%{opacity:.35}}
+@media (max-width:1060px){.pwr{display:none}}
+h1 .scr{display:inline-block}
+.roles-line{font:800 clamp(22px,2.8vw,38px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.04em;display:flex;flex-wrap:wrap;gap:6px 18px}
+.roles-line span:nth-child(odd){color:var(--accent)}
+.roles-line span:nth-child(even){color:var(--gold)}
+.tagline{font:500 clamp(18px,1.8vw,23px)/1.4 var(--f-body);max-width:46ch;margin:0;color:var(--muted)}
+.tagline strong{color:var(--fg);font-weight:700}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.btn{display:inline-flex;align-items:center;gap:10px;font:500 13px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--fg);background:transparent;border:1px solid var(--line);padding:14px 18px;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--gold);border-color:var(--gold);color:#0A0D13;box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 25%,transparent),0 0 28px color-mix(in srgb,var(--signal) 45%,transparent)}
+.btn svg{width:14px;height:14px}
+.stage{position:relative;z-index:0;height:clamp(150px,24vw,340px);margin-top:clamp(8px,2.5vw,32px)}
+.hud{position:relative;z-index:2;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding-block:14px 18px;border-top:1px solid var(--line);margin-top:6px}
+.hud .label span{color:var(--fg)}
+.hud .hint{color:var(--signal)}
+
+/* TICKER */
+.ticker{overflow:hidden;border-bottom:1px solid var(--line);background:var(--panel)}
+.ticker-track{display:flex;width:max-content;animation:tick 46s linear infinite}
+.ticker-track span{font:800 clamp(22px,2.6vw,34px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.04em;padding:18px 26px;white-space:nowrap;color:var(--muted)}
+.ticker-track span:nth-child(3n+1){color:var(--fg)}
+.ticker-track span::after{content:"/";color:var(--accent);margin-left:52px}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section.sec{padding-block:clamp(72px,10vw,140px);border-bottom:1px solid var(--line);position:relative}
+.sec-head{position:relative;display:grid;gap:14px;margin-bottom:clamp(36px,5vw,64px);max-width:1040px}
+.sec-head h2{margin:0;font:800 clamp(42px,7vw,104px)/.88 var(--f-display);text-transform:uppercase;text-wrap:balance}
+.sec-head h2 em{font-style:normal;color:var(--accent)}
+.sec-head p{margin:0;color:var(--muted);max-width:62ch;font-size:18px}
+.scan{position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--signal);box-shadow:0 0 18px var(--signal);opacity:0;pointer-events:none}
+.sec-head.in .scan{animation:scan 1.1s cubic-bezier(.6,0,.2,1) 1}
+@keyframes scan{0%{opacity:1;left:0}90%{opacity:1}100%{opacity:0;left:100%}}
+
+/* DOSSIER */
+.dossier{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(32px,6vw,96px);align-items:center}
+@media (max-width:960px){.dossier{grid-template-columns:1fr}}
+.reactor{position:relative;width:min(100%,520px);aspect-ratio:1;max-width:100%;justify-self:center}
+.reactor svg{width:100%;height:100%;overflow:visible}
+.reactor .g{transform-origin:200px 200px}
+.reactor .ticks{animation:spin 60s linear infinite;stroke:var(--muted)}
+.reactor .ring2{animation:spin 26s linear infinite reverse}
+.reactor .orbit{animation:spin 40s linear infinite}
+.reactor .arcs{animation:spin 9s linear infinite}
+.reactor:hover .arcs{animation-duration:2.4s}
+.reactor:hover .ring2{animation-duration:8s}
+.reactor .core{animation:pulse 2.6s ease-in-out infinite;transform-origin:200px 200px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{50%{transform:scale(1.06);opacity:.85}}
+.reactor-cap{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);white-space:nowrap}
+.file{display:grid;gap:28px;min-width:0}
+.file .bio{margin:0;font-size:clamp(18px,1.6vw,21px);line-height:1.6;max-width:60ch}
+.file .bio strong{color:var(--accent);font-weight:700}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line)}
+.field{padding:16px 16px 16px 0;border-bottom:1px solid var(--line);display:grid;gap:4px;min-width:0}
+.field:nth-child(even){padding-left:16px;border-left:1px solid var(--line)}
+.field .v{font:700 18px/1.3 var(--f-body);overflow-wrap:anywhere}
+.field .v.hot{color:var(--accent)}
+@media (max-width:560px){.fields{grid-template-columns:1fr}.field:nth-child(even){padding-left:0;border-left:0}}
+
+/* RECORD */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+@media (max-width:900px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--ink);padding:30px 24px;display:grid;gap:8px;align-content:start}
+.stat b{font:900 clamp(64px,8vw,120px)/.86 var(--f-display);font-variant-numeric:tabular-nums}
+.stat .u{font:500 12px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.stat span{color:var(--muted);font-size:15px}
+.creds{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.cred{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--line);background:var(--panel);font-size:15px}
+.cred i{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);flex:none}
+.reactor .scanbar{animation:scanbar 3.2s linear infinite}
+@keyframes scanbar{from{transform:translateY(-90px)}to{transform:translateY(90px)}}
+.reactor .brk{animation:brk 2s ease-in-out infinite}
+@keyframes brk{50%{opacity:.4}}
+
+/* ARC */
+.arc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;position:relative}
+.arc::before{content:"";position:absolute;left:0;right:0;top:27px;height:2px;background:var(--line)}
+.arc::after{content:"";position:absolute;top:22px;left:0;width:70px;height:12px;background:linear-gradient(90deg,transparent,var(--accent));filter:drop-shadow(0 0 8px var(--accent));animation:packet 5s linear infinite}
+@keyframes packet{from{left:-70px}to{left:100%}}
+.chap{position:relative;padding-right:22px;min-width:0}
+.chap .node{width:56px;height:56px;border:2px solid var(--line);background:var(--ink);display:grid;place-items:center;position:relative;z-index:1;color:var(--accent);transition:border-color .3s}
+.chap:hover .node{border-color:var(--accent)}
+.chap .node svg{width:26px;height:26px}
+.chap .k{margin-top:18px}
+.chap h3{margin:6px 0 8px;font:800 30px/1 var(--f-display);text-transform:uppercase}
+.chap p{margin:0;color:var(--muted);font-size:16px}
+@media (max-width:860px){
+  .arc{grid-template-columns:1fr;gap:34px}
+  .arc::before{left:27px;right:auto;top:0;bottom:0;width:2px;height:auto}
+  .arc::after{left:22px;top:0;width:12px;height:70px;background:linear-gradient(180deg,transparent,var(--accent));animation:packetv 5s linear infinite}
+  .chap{display:grid;grid-template-columns:56px 1fr;column-gap:18px;padding-right:0}
+  .chap .txt{grid-column:2}.chap .k{margin-top:4px}
+}
+@keyframes packetv{from{top:-70px}to{top:100%}}
+
+/* WORKSHOP */
+.kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:16px}
+.gear{position:relative;background:var(--panel);border:1px solid var(--line);padding:24px;display:grid;gap:12px;align-content:start;overflow:hidden;transition:border-color .25s,transform .25s;--mx:50%;--my:50%}
+.gear::before{content:"";position:absolute;inset:0;background:radial-gradient(340px circle at var(--mx) var(--my),color-mix(in srgb,var(--accent) 14%,transparent),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.gear:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.gear:hover::before{opacity:1}
+.gear .spec{font:500 12px var(--f-mono);letter-spacing:.1em;color:var(--signal);text-transform:uppercase;position:relative}
+.gear h3{margin:0;font:800 32px/.95 var(--f-display);text-transform:uppercase;position:relative}
+.gear p{margin:0;color:var(--muted);font-size:16px;position:relative}
+.gear .big{position:absolute;right:16px;top:12px;font:900 64px/1 var(--f-display);color:transparent;-webkit-text-stroke:1.2px var(--line);pointer-events:none}
+.eco{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;color:var(--muted)}
+.eco .tag{font:500 13px var(--f-mono);padding:8px 12px;border:1px solid var(--line);color:var(--fg)}
+.eco .tag.me{border-color:var(--accent);color:var(--accent)}
+
+/* FRONTIERS */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:16px}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);padding:26px 24px 28px;display:grid;grid-template-rows:auto auto 1fr;gap:14px;overflow:hidden;transition:transform .25s ease,border-color .25s;--mx:50%;--my:50%}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(360px circle at var(--mx) var(--my),color-mix(in srgb,var(--signal) 14%,transparent),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover{border-color:color-mix(in srgb,var(--signal) 55%,var(--line))}
+.card:hover::before{opacity:1}
+.card .ico{width:44px;height:44px;color:var(--accent)}
+.card h3{margin:0;font:800 30px/1 var(--f-display);text-transform:uppercase}
+.card p{margin:0;color:var(--muted);font-size:16px}
+
+/* RESEARCH */
+.stats.sch .stat b{font-size:clamp(56px,7vw,104px)}
+.stats.sch .since{font:500 12px var(--f-mono);color:var(--signal);letter-spacing:.06em}
+.sch-meta{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:20px 0 48px}
+.sch-meta .chip{font:500 13px var(--f-mono);padding:8px 12px;border:1px solid var(--line);color:var(--fg)}
+.pubs{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.pub{display:grid;grid-template-columns:64px minmax(0,1fr) minmax(140px,240px);gap:20px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}
+.pub .yr{font:800 24px/1 var(--f-display);color:var(--gold);font-variant-numeric:tabular-nums}
+.pub h4{margin:0 0 4px;font:600 18px/1.35 var(--f-body)}
+.pub .vn{font:400 13px/1.4 var(--f-mono);color:var(--muted)}
+.pub .vn b{color:var(--accent);font-weight:500}
+.pub .cit{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.pub .bar{height:6px;background:var(--line);position:relative;overflow:hidden}
+.pub .bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--accent),var(--gold));box-shadow:0 0 10px color-mix(in srgb,var(--gold) 50%,transparent)}
+.pub .n{font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;min-width:3ch;text-align:right}
+@media (max-width:720px){.pub{grid-template-columns:52px minmax(0,1fr)}.pub .cit{grid-column:2}}
+.pub-note{margin-top:14px;color:var(--muted);font-size:14px}
+
+/* CLASSROOM */
+.live-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:16px}
+.live{position:relative;display:grid;grid-template-rows:auto 1fr auto;min-height:270px;text-decoration:none;background:var(--panel);border:1px solid var(--line);overflow:hidden;transition:border-color .25s,transform .25s}
+.live:hover{border-color:var(--accent);transform:translateY(-4px)}
+.live .chrome{display:flex;gap:6px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);font:400 11px var(--f-mono);color:var(--muted);min-width:0}
+.live .chrome i{width:8px;height:8px;border-radius:50%;background:var(--line);flex:none}
+.live .chrome span{margin-left:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.live .body{position:relative;padding:22px 20px;display:grid;align-content:end;gap:8px}
+.live .ghost{position:absolute;right:-6px;top:-10px;font:900 120px/1 var(--f-display);color:transparent;-webkit-text-stroke:1.5px var(--line);transition:-webkit-text-stroke-color .3s,transform .5s;pointer-events:none}
+.live:hover .ghost{-webkit-text-stroke-color:var(--accent);transform:translateX(-10px)}
+.live h3{margin:0;font:800 32px/.95 var(--f-display);text-transform:uppercase;position:relative}
+.live p{margin:0;color:var(--muted);font-size:15px;position:relative}
+.live .foot{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-top:1px solid var(--line)}
+.pill{display:inline-flex;align-items:center;gap:7px;font:500 11px var(--f-mono);letter-spacing:.12em;color:var(--ok)}
+.arrow{font:500 13px var(--f-mono);color:var(--accent)}
+.taught{margin-top:48px;display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start}
+@media (max-width:700px){.taught{grid-template-columns:1fr}}
+.subs{display:flex;flex-wrap:wrap;gap:8px}
+.sub{font:500 14px var(--f-mono);padding:9px 12px;border:1px solid var(--line);background:var(--panel);transition:border-color .2s,color .2s}
+.sub:hover{border-color:var(--accent);color:var(--accent)}
+.mentor{margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px}
+.mentor div{border-left:3px solid var(--accent);padding-left:16px}
+.mentor h4{margin:0 0 4px;font:800 24px/1.05 var(--f-display);text-transform:uppercase}
+.mentor p{margin:0;color:var(--muted);font-size:15px}
+
+/* PHILOSOPHY */
+.phil{overflow:hidden}
+.kin{display:grid;margin:0}
+.kin span{display:block;font:900 clamp(64px,15vw,240px)/.86 var(--f-display);text-transform:uppercase;letter-spacing:-.01em;--f:0;
+  color:transparent;-webkit-text-stroke:1.5px color-mix(in srgb,var(--fg) 70%,transparent);
+  background:linear-gradient(90deg,var(--accent) calc(var(--f)*100%),transparent calc(var(--f)*100%));-webkit-background-clip:text;background-clip:text}
+.kin span:nth-child(2){padding-left:clamp(0px,8vw,160px)}
+.kin span:nth-child(3){padding-left:clamp(0px,16vw,320px)}
+.phil-foot{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px;margin-top:clamp(40px,5vw,72px);align-items:end}
+.phil-foot p{margin:0;font:600 clamp(24px,2.8vw,38px)/1.1 var(--f-display);text-transform:uppercase;max-width:22ch}
+.phil-foot .label{justify-self:end}
+@media (max-width:640px){.phil-foot .label{justify-self:start}}
+
+/* CONTACT */
+.contact h2{margin:0 0 clamp(28px,4vw,48px);font:900 clamp(64px,13vw,210px)/.84 var(--f-display);text-transform:uppercase;text-wrap:balance}
+.contact h2 em{font-style:normal;color:var(--accent)}
+.chan-row{display:grid;grid-template-columns:140px minmax(0,1fr) auto;gap:16px;align-items:center;padding:20px 0;border-top:1px solid var(--line)}
+.chan-row:last-child{border-bottom:1px solid var(--line)}
+.chan-row .v{font:500 clamp(18px,2.2vw,28px)/1.2 var(--f-mono);overflow-wrap:anywhere;min-width:0}
+.chan-row span.v{user-select:all}
+.chan-row a.v{text-decoration:none}
+.chan-row a.v:hover{color:var(--accent)}
+@media (max-width:620px){.chan-row{grid-template-columns:1fr auto}.chan-row .label{grid-column:1/-1}}
+footer{padding-block:28px 40px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+/* HUD CHROME */
+.odo{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:40;display:grid;justify-items:center;gap:10px;pointer-events:none}
+.odo .bar{width:2px;height:180px;background:var(--line);position:relative}
+.odo .bar i{position:absolute;left:0;top:0;width:2px;height:0;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.odo .label{writing-mode:vertical-rl;font-size:10px;font-variant-numeric:tabular-nums}
+@media (max-width:1100px){.odo{display:none}}
+.reticle{position:fixed;left:0;top:0;z-index:100;pointer-events:none;width:40px;height:40px;margin:-20px 0 0 -20px;border:1px solid var(--accent);border-radius:50%;opacity:0;transition:opacity .3s,width .2s,height .2s,margin .2s}
+.reticle::before,.reticle::after{content:"";position:absolute;background:var(--accent)}
+.reticle::before{left:50%;top:-8px;bottom:-8px;width:1px}
+.reticle::after{top:50%;left:-8px;right:-8px;height:1px}
+.reticle span{position:absolute;left:30px;top:30px;font:400 10px var(--f-mono);color:var(--accent);white-space:nowrap}
+.reticle.big{width:64px;height:64px;margin:-32px 0 0 -32px}
+@media (pointer:fine){.reticle.on{opacity:1}}
+
+@media (prefers-reduced-motion:reduce){
+  .ticker-track,.arc::after,.dot,.caret,.reactor .g,.reactor .core,.reactor .scanbar,.reactor .brk,.pwr .cells i{animation:none}
+  html{scroll-behavior:auto}
+  .card,.live,.gear{transition:none}
+}
+</style>
+
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#hero" aria-label="Home"><b>RPT</b><span>/dr_rocky</span></a>
+    <nav aria-label="Sections">
+      <a href="#file">File</a>
+      <a href="#record">Record</a>
+      <a href="#workshop">Workshop</a>
+      <a href="#frontiers">Frontiers</a>
+      <a href="#research">Research</a>
+      <a href="#classroom">Classroom</a>
+      <a class="keep" href="#contact">Contact</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to light theme">
+      <svg class="moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 9.5A5.5 5.5 0 016.5 2.5a5.5 5.5 0 107 7z"/></svg>
+      <svg class="sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6L13 13M3 13l1.4-1.4M11.6 4.4L13 3"/></svg>
+      <span id="themeTxt">Dark</span>
+    </button>
+    <div class="pwr" aria-hidden="true">PWR <span class="cells"><i></i><i></i><i></i><i></i><i></i></span> 100%</div>
+  </div>
+</header>
+
+<div class="reticle" id="reticle" aria-hidden="true"><span id="retxy">x 0 · y 0</span></div>
+<div class="odo" aria-hidden="true"><div class="bar"><i id="odoFill"></i></div><div class="label" id="odoTxt">ODOM 0.00 m</div></div>
+
+<main>
+<section id="hero" aria-label="Introduction">
+  <canvas id="heroCv" aria-hidden="true"></canvas>
+  <i class="corner tl" aria-hidden="true"></i><i class="corner tr" aria-hidden="true"></i><i class="corner bl" aria-hidden="true"></i><i class="corner br" aria-hidden="true"></i>
+  <div class="wrap hero-inner">
+    <div class="boot" id="boot">$ hud --boot --pilot dr_rocky <span class="ok">[OK] power 100% · all systems nominal</span></div>
+    <h1><span class="dr">Dr.</span><span class="scr">Rakesh P.</span> <span class="scr">Tapaskar</span></h1>
+    <div class="roles-line"><span>Engineer</span><span>Inventor</span><span>Educator</span><span>Founder</span></div>
+    <p class="tagline">He designs <strong>research-to-industry pipelines</strong>, then builds the robots, the lab and the engineers that run them.</p>
+    <div class="ctas">
+      <a class="btn primary" href="#file">Open the file <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="btn" href="#workshop">Enter the workshop</a>
+    </div>
+  </div>
+  <div class="stage" id="stage" aria-hidden="true"></div>
+  <div class="wrap hud">
+    <div class="label">Scanner · <span>120 beams</span> · <span id="rangeTxt">220 px</span> range</div>
+    <div class="label">Field · <span id="wordTxt">ENGINEER</span> <b id="wordIdx">1/6</b></div>
+    <div class="label hint">Move your cursor over the letters. It is a LiDAR.</div>
+  </div>
+</section>
+
+<div class="ticker" aria-label="Focus areas">
+  <div class="ticker-track" id="ticker">
+    <span>Human–robot collaboration</span><span>AMR navigation</span><span>Multi-robot orchestration</span><span>Edge AI</span><span>Generative visuomotor systems</span><span>Digital twins</span><span>Sim-to-real</span><span>Industrial IoT</span><span>Photovoltaics</span><span>Smart manufacturing</span>
+  </div>
+</div>
+
+<section class="sec" id="file">
+  <div class="wrap">
+    <div class="sec-head"><span class="scan"></span>
+      <div class="label"><b>//</b> 01 · subject file</div>
+      <h2>The man in <em>the lab.</em></h2>
+    </div>
+    <div class="dossier">
+      <div class="reactor" id="reactor" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <defs>
+            <path id="orbitPath" d="M200,200 m-150,0 a150,150 0 1,1 300,0 a150,150 0 1,1 -300,0"/>
+            <radialGradient id="coreGrad">
+              <stop offset="0" style="stop-color:var(--signal);stop-opacity:.95"/>
+              <stop offset=".55" style="stop-color:var(--signal);stop-opacity:.25"/>
+              <stop offset="1" style="stop-color:var(--signal);stop-opacity:0"/>
+            </radialGradient>
+            <clipPath id="faceClip"><circle cx="200" cy="200" r="88"/></clipPath>
+            <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="1.4" fill="#000" opacity=".28"/></pattern>
+            <filter id="hudTone" color-interpolation-filters="sRGB">
+              <feColorMatrix type="saturate" values="0"/>
+              <feComponentTransfer>
+                <feFuncR type="table" tableValues="0.06 0.62 0.95 1"/>
+                <feFuncG type="table" tableValues="0.02 0.08 0.42 0.86"/>
+                <feFuncB type="table" tableValues="0.04 0.07 0.14 0.42"/>
+              </feComponentTransfer>
+              <feComponentTransfer><feFuncA type="linear" slope="1"/></feComponentTransfer>
+            </filter>
+          </defs>
+          <g class="g ticks" id="ticks"></g>
+          <circle cx="200" cy="200" r="190" fill="none" style="stroke:var(--line)" stroke-width="1"/>
+          <g class="g ring2"><circle cx="200" cy="200" r="168" fill="none" style="stroke:var(--accent)" stroke-width="2" stroke-dasharray="2 10 40 10"/></g>
+          <g class="g orbit"><text style="fill:var(--muted);font:500 11px 'IBM Plex Mono',monospace;letter-spacing:3px"><textPath href="#orbitPath">ENGINEER · INVENTOR · EDUCATOR · FOUNDER · DIRECTOR · MENTOR · ENGINEER · INVENTOR · EDUCATOR · FOUNDER · DIRECTOR · MENTOR ·</textPath></text></g>
+          <g class="g arcs"><circle cx="200" cy="200" r="122" fill="none" style="stroke:var(--signal)" stroke-width="6" stroke-dasharray="150 105.5"/></g>
+          <circle cx="200" cy="200" r="104" fill="none" style="stroke:var(--line)" stroke-width="1"/>
+          <circle cx="200" cy="200" r="96" style="fill:var(--panel);stroke:var(--line)" stroke-width="1"/>
+          <circle class="core" cx="200" cy="200" r="94" fill="url(#coreGrad)"/>
+          <text x="200" y="200" text-anchor="middle" dominant-baseline="middle" style="fill:var(--fg);font:900 64px 'Big Shoulders Display',Impact,sans-serif;letter-spacing:2px">RPT</text>
+          <g clip-path="url(#faceClip)">
+            <image id="pilotImg" x="112" y="112" width="176" height="176" href="https://avatars.githubusercontent.com/u/42461167?v=4&amp;s=460" preserveAspectRatio="xMidYMid slice" filter="url(#hudTone)"/>
+            <rect x="112" y="112" width="176" height="176" fill="url(#scanlines)"/>
+            <rect class="scanbar" x="112" y="196" width="176" height="8" style="fill:var(--signal)" opacity=".35"/>
+          </g>
+          <circle cx="200" cy="200" r="88" fill="none" style="stroke:var(--gold)" stroke-width="2"/>
+          <g class="brk" fill="none" style="stroke:var(--signal)" stroke-width="2">
+            <path d="M160 150v-12h12M240 150v-12h-12M160 238v12h12M240 238v12h-12"/>
+          </g>        </svg>
+        <div class="label reactor-cap">Pilot · <b>Dr. Rocky</b></div>
+      </div>
+      <div class="file">
+        <p class="bio">Dr. Rakesh P. Tapaskar works where <strong>automation, robotics, embedded systems, applied AI and energy</strong> meet, and he holds research to one test: does it run? Five years in industry, ten years in the classroom, three granted patents. Today he directs the <strong>Center for Automation and Robotics Research</strong> at KLE Technological University and runs his own innovation company alongside it.</p>
+        <div class="fields">
+          <div class="field"><div class="label">Subject</div><div class="v">Dr. Rakesh P. Tapaskar</div></div>
+          <div class="field"><div class="label">Callsign</div><div class="v hot">Dr. Rocky</div></div>
+          <div class="field"><div class="label">Base</div><div class="v">CARR Lab, KLE Tech, Hubballi</div></div>
+          <div class="field"><div class="label">Rank</div><div class="v">Associate Professor · Director</div></div>
+          <div class="field"><div class="label">Company</div><div class="v">Founder, Sureno Energrene Pvt. Ltd.</div></div>
+          <div class="field"><div class="label">Certified</div><div class="v">MMRE Photovoltaic Expert</div></div>
+          <div class="field"><div class="label">Network</div><div class="v">Member, 14 IAENG societies</div></div>
+          <div class="field"><div class="label">Threat level to unsolved problems</div><div class="v hot">Critical</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="record">
+  <div class="wrap">
+    <div class="sec-head"><span class="scan"></span>
+      <div class="label"><b>//</b> 02 · service record</div>
+      <h2>The numbers <em>speak.</em></h2>
+    </div>
+    <div class="stats">
+      <div class="stat"><b data-n="3">3</b><div class="u">Granted patents</div><span>One in India, two in Australia</span></div>
+      <div class="stat"><b data-n="15">15</b><div class="u">Years in the field</div><span>Ten teaching, five in industry</span></div>
+      <div class="stat"><b data-n="14">14</b><div class="u">IAENG societies</div><span>International Association of Engineers</span></div>
+      <div class="stat"><b data-n="15">15</b><div class="u">Sites live</div><span>Course and lab sites on GitHub Pages</span></div>
+    </div>
+    <div class="creds">
+      <span class="cred"><i></i>MMRE-certified Photovoltaic Expert</span>
+      <span class="cred"><i></i>Peer reviewer in energy, biomedical and robotics research</span>
+      <span class="cred"><i></i>Research mentor to UG, PG and PhD scholars</span>
+      <span class="cred"><i></i>Consultant in automation, robotics and energy systems</span>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="arc">
+  <div class="wrap">
+    <div class="sec-head"><span class="scan"></span>
+      <div class="label"><b>//</b> 03 · origin story</div>
+      <h2>Built in industry. <em>Forged</em> in the classroom.</h2>
+    </div>
+    <div class="arc">
+      <div class="chap"><div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 21V11l6 3v-3l6 3v-3l6 3V3h2v18z"/></svg></div><div class="txt"><div class="label k">Five years</div><h3>Industry</h3><p>Engineering where systems have to work on day one, with no extension on the deadline.</p></div></div>
+      <div class="chap"><div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8l10-5 10 5-10 5z"/><path d="M6 10v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg></div><div class="txt"><div class="label k">Ten years</div><h3>Classroom</h3><p>From Assistant to Associate Professor, teaching everything from power electronics to AI in autonomous robots.</p></div></div>
+      <div class="chap"><div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3"/></svg></div><div class="txt"><div class="label k">Now</div><h3>Director, CARR</h3><p>Cobots, AMR fleets, motion capture and a full factory-floor testbed, under one roof.</p></div></div>
+      <div class="chap"><div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><div class="txt"><div class="label k">In parallel</div><h3>Founder</h3><p>Sureno Energrene Pvt. Ltd., his independent research and innovation vehicle.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="workshop">
+  <div class="wrap">
+    <div class="sec-head"><span class="scan"></span>
+      <div class="label"><b>//</b> 04 · the workshop</div>
+      <h2>Every inventor needs <em>a workshop.</em></h2>
+      <p>The Center for Automation and Robotics Research is where ideas meet hardware. This is what is on the floor.</p>
+    </div>
+    <div class="kit">
+      <article class="gear"><div class="big" aria-hidden="true">TM5</div><div class="spec">OMRON TM5-700AC</div><h3>Collaborative robots</h3><p>Cobot arms for human–robot collaboration and safety research, working beside people instead of behind cages.</p></article>
+      <article class="gear"><div class="big" aria-hidden="true">LD</div><div class="spec">OMRON LD-250</div><h3>Autonomous mobile robots</h3><p>An industrial AMR fleet for navigation, fleet coordination and multi-robot orchestration.</p></article>
+      <article class="gear"><div class="big" aria-hidden="true">MOCAP</div><div class="spec">OptiTrack · 6 × PrimeX 13/22</div><h3>Motion capture</h3><p>Ground truth for every robot on the floor, so claims about accuracy come with measurements.</p></article>
+      <article class="gear"><div class="big" aria-hidden="true">60×30</div><div class="spec">CoFact Floor · 60 × 30 ft</div><h3>Factory-floor testbed</h3><p>A full-scale collaborative factory floor where cobots, AMRs and people share the same space.</p></article>
+      <article class="gear"><div class="big" aria-hidden="true">3φ</div><div class="spec">Triaxial vibration sensing</div><h3>Rotating-equipment rig</h3><p>A three-phase motor and bearing testbed that separates inner-race, outer-race and ball faults by their vibration signatures.</p></article>
+      <article class="gear"><div class="big" aria-hidden="true">SIM</div><div class="spec">NVIDIA Isaac Sim</div><h3>Simulation platform</h3><p>An AMR simulation platform, so the fleet is tested in software before it moves on the floor.</p></article>
+    </div>
+    <div class="eco"><span class="label">STAR Labs ecosystem</span><span class="tag me">CARR</span><span class="tag">CEVI</span><span class="tag">CIM</span><span class="tag">CAIR</span></div>
+  </div>
+</section>
+
+<section class="sec" id="frontiers">
+  <div class="wrap">
+    <div class="sec-head"><span class="scan"></span>
+      <div class="label"><b>//</b> 05 · research frontiers</div>
+      <h2>Where he is <em>pushing.</em></h2>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13" cy="10" r="4"/><path d="M13 14v12M7 20h12M13 26l-5 12M13 26l5 12"/><path d="M28 40h14M32 40v-6h6v6M35 34V24l-6-8M29 16l-4 2"/></svg>
+        <h3>Human–robot collaboration</h3>
+        <p>Safety and shared workspaces, so a cobot and a person can work the same task without a fence between them.</p>
+      </article>
+      <article class="card">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="38" r="4"/><circle cx="38" cy="10" r="4"/><circle cx="38" cy="38" r="4"/><path d="M14 36c8-2 10-18 20-24M14 38h20" stroke-dasharray="3 3"/></svg>
+        <h3>AMR navigation &amp; fleets</h3>
+        <p>Autonomous navigation and multi-robot orchestration for factories that move material without a human driver.</p>
+      </article>
+      <article class="card">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="10" width="16" height="12"/><circle cx="14" cy="16" r="3"/><path d="M22 16h6l6 8M34 24l6-4M34 24l4 8"/><path d="M8 32h10M8 38h16" stroke-dasharray="2 3"/></svg>
+        <h3>Generative visuomotor systems</h3>
+        <p>Models that see and then act, connecting perception straight to motion for manipulation and mobility.</p>
+      </article>
+      <article class="card">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="14" y="14" width="20" height="20"/><rect x="20" y="20" width="8" height="8"/><path d="M19 8v6M24 8v6M29 8v6M19 34v6M24 34v6M29 34v6M8 19h6M8 24h6M8 29h6M34 19h6M34 24h6M34 29h6"/></svg>
+        <h3>Edge AI</h3>
+        <p>Embedded intelligence that senses, decides and acts on the device, for robots and for energy infrastructure.</p>
+      </article>
+      <article class="card">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16l10-6 10 6v12l-10 6-10-6z"/><path d="M22 20l10-6 10 6v12l-10 6-10-6z" stroke-dasharray="3 3"/></svg>
+        <h3>Digital twins &amp; sim-to-real</h3>
+        <p>Simulate first, deploy second: digital-twin workflows and pipelines that carry results from simulation onto real hardware.</p>
+      </article>
+      <article class="card">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M27 4L11 27h12l-2 17 16-23H25z"/></svg>
+        <h3>Energy systems</h3>
+        <p>Renewable energy, photovoltaics and energy analytics, with optimisation aimed at systems that last.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="research">
+  <div class="wrap">
+    <div class="sec-head"><span class="scan"></span>
+      <div class="label"><b>//</b> 06 · research record · Google Scholar</div>
+      <h2>Published. Cited. <em>Proven.</em></h2>
+      <p>Fifty-two works across solar photovoltaics, electric-vehicle batteries, nanomaterials and sensing, deep learning, robotics and engineering education.</p>
+    </div>
+    <div class="stats sch">
+      <div class="stat"><b data-n="409">409</b><div class="u">Citations</div><span class="since">330 since 2021</span></div>
+      <div class="stat"><b data-n="9">9</b><div class="u">h-index</div><span class="since">8 since 2021</span></div>
+      <div class="stat"><b data-n="8">8</b><div class="u">i10-index</div><span class="since">7 since 2021</span></div>
+      <div class="stat"><b data-n="52">52</b><div class="u">Publications</div><span>Journals, conferences and book chapters</span></div>
+    </div>
+    <div class="sch-meta">
+      <span class="label">Interests</span>
+      <span class="chip">Solar Photovoltaics</span><span class="chip">Internet of Energy</span><span class="chip">DR &amp; DSM in Renewable Energy</span><span class="chip">Robotics</span><span class="chip">Automation</span>
+      <a class="btn" href="https://scholar.google.com/citations?user=8PPO1E4AAAAJ&amp;hl=en" target="_blank" rel="noopener">Full profile on Scholar →</a>
+    </div>
+    <div class="label" style="margin-bottom:14px">Selected works · bar length = citations</div>
+    <ul class="pubs">
+      <li class="pub"><div class="yr">2017</div><div><h4>IoT based solar energy monitoring system</h4><div class="vn">International Conference on Energy, Communication, Data Analytics and Soft Computing (ICECDS)</div></div><div class="cit"><div class="bar"><i style="width:100%"></i></div><span class="n">111</span></div></li>
+      <li class="pub"><div class="yr">2017</div><div><h4>Solar energy monitoring system using IoT</h4><div class="vn">Indian Journal of Scientific Research</div></div><div class="cit"><div class="bar"><i style="width:56.8%"></i></div><span class="n">63</span></div></li>
+      <li class="pub"><div class="yr">2024</div><div><h4>Advancements in battery management systems for electric vehicles: a MATLAB-based simulation of 4S3P lithium-ion battery packs</h4><div class="vn">World Electric Vehicle Journal · <b>Q2 · first author</b></div></div><div class="cit"><div class="bar"><i style="width:50.5%"></i></div><span class="n">56</span></div></li>
+      <li class="pub"><div class="yr">2019</div><div><h4>Green nanotechnology for biomedical, food, and agricultural applications</h4><div class="vn">Handbook of Ecomaterials · Springer</div></div><div class="cit"><div class="bar"><i style="width:41.4%"></i></div><span class="n">46</span></div></li>
+      <li class="pub"><div class="yr">2018</div><div><h4>Biomass energy and bio-solar hybrid energy systems</h4><div class="vn">Handbook of Ecomaterials · Springer · <b>first author</b></div></div><div class="cit"><div class="bar"><i style="width:6.3%"></i></div><span class="n">7</span></div></li>
+      <li class="pub"><div class="yr">2024</div><div><h4>Chest X-ray based pulmonary disease classification using transfer learning and CNN</h4><div class="vn">IEEE International Conference on Information Technology, Electronics and Intelligent Communication Systems</div></div><div class="cit"><div class="bar"><i style="width:3.6%"></i></div><span class="n">4</span></div></li>
+      <li class="pub"><div class="yr">2019</div><div><h4>Artificial intelligence based intelligent social humanoid robot: Ajit 2.0</h4><div class="vn">International Conference on Intelligent Computing and Control Systems (ICICCS)</div></div><div class="cit"><div class="bar"><i style="width:2.7%"></i></div><span class="n">3</span></div></li>
+      <li class="pub"><div class="yr">2026</div><div><h4>Practice-based learning in control systems design: a pedagogical framework for enhanced engineering education</h4><div class="vn">Journal of Engineering Education Transformations · <b>Q3</b></div></div><div class="cit"><div class="bar"><i style="width:1.8%"></i></div><span class="n">2</span></div></li>
+      <li class="pub"><div class="yr">2025</div><div><h4>Simulating diverse robot motion trajectories using Simulink</h4><div class="vn">International Conference on Recent Advancements in Mechanical Engineering</div></div><div class="cit"><div class="bar"><i style="width:0%"></i></div><span class="n">New</span></div></li>
+      <li class="pub"><div class="yr">2023</div><div><h4>Object identification and surveillance based on deep learning algorithms for quadcopters</h4><div class="vn">ITM Web of Conferences</div></div><div class="cit"><div class="bar"><i style="width:0%"></i></div><span class="n">—</span></div></li>
+      <li class="pub"><div class="yr">2015</div><div><h4>SWIS: Solar Insolation Measuring Technology</h4><div class="vn">Indian patent application 6321/CHE/2015</div></div><div class="cit"><div class="bar"><i style="width:0%"></i></div><span class="n">IP</span></div></li>
+    </ul>
+    <p class="pub-note">Figures from Google Scholar, read 9 October 2026.</p>
+  </div>
+</section>
+
+<section class="sec" id="classroom">
+  <div class="wrap">
+    <div class="sec-head"><span class="scan"></span>
+      <div class="label"><b>//</b> 07 · the classroom</div>
+      <h2>He builds <em>engineers</em> too.</h2>
+      <p>Every course he teaches gets its own live site. These four are open now.</p>
+    </div>
+    <div class="live-grid">
+      <a class="live" href="https://rptapaskar.github.io/Autonomous-Mobile-Robots/" target="_blank" rel="noopener">
+        <div class="chrome"><i></i><i></i><i></i><span>rptapaskar.github.io/Autonomous-Mobile-Robots</span></div>
+        <div class="body"><div class="ghost" aria-hidden="true">AMR</div><h3>Autonomous Mobile Robots</h3><p>Kinematics, localisation, mapping and navigation.</p></div>
+        <div class="foot"><span class="pill"><i class="dot"></i>LIVE</span><span class="arrow">Open →</span></div>
+      </a>
+      <a class="live" href="https://rptapaskar.github.io/AMR_Tutorial/" target="_blank" rel="noopener">
+        <div class="chrome"><i></i><i></i><i></i><span>rptapaskar.github.io/AMR_Tutorial</span></div>
+        <div class="body"><div class="ghost" aria-hidden="true">TUT</div><h3>AMR Tutorial</h3><p>The hands-on tutorial track for mobile robotics.</p></div>
+        <div class="foot"><span class="pill"><i class="dot"></i>LIVE</span><span class="arrow">Open →</span></div>
+      </a>
+      <a class="live" href="https://rptapaskar.github.io/Mobile-Robotics-and-Perception/" target="_blank" rel="noopener">
+        <div class="chrome"><i></i><i></i><i></i><span>rptapaskar.github.io/Mobile-Robotics-and-Perception</span></div>
+        <div class="body"><div class="ghost" aria-hidden="true">MRP</div><h3>Mobile Robotics &amp; Perception</h3><p>Sensing, perception and estimation, 17EARE401.</p></div>
+        <div class="foot"><span class="pill"><i class="dot"></i>LIVE</span><span class="arrow">Open →</span></div>
+      </a>
+      <a class="live" href="https://rptapaskar.github.io/ROS_LAB_BASIC/" target="_blank" rel="noopener">
+        <div class="chrome"><i></i><i></i><i></i><span>rptapaskar.github.io/ROS_LAB_BASIC</span></div>
+        <div class="body"><div class="ghost" aria-hidden="true">ROS</div><h3>Robot Operating System Lab</h3><p>From the first node to a working robot.</p></div>
+        <div class="foot"><span class="pill"><i class="dot"></i>LIVE</span><span class="arrow">Open →</span></div>
+      </a>
+    </div>
+    <div class="taught">
+      <div class="label">Subjects taught</div>
+      <div class="subs">
+        <span class="sub">Analog &amp; Digital Electronics + Lab</span><span class="sub">Power Electronics</span><span class="sub">Industrial IoT</span><span class="sub">Building Management Systems</span><span class="sub">Real-Time Embedded Systems + Lab</span><span class="sub">Microcontroller Programming &amp; Interfacing + Lab</span><span class="sub">Robot Operating System Lab</span><span class="sub">Mobile Robotics &amp; Perception</span><span class="sub">Autonomous Mobile Robots</span><span class="sub">AI in Autonomous Robots</span>
+      </div>
+    </div>
+    <div class="mentor">
+      <div><h4>Mentor</h4><p>Guides UG, PG and PhD scholars from a problem statement to a working system.</p></div>
+      <div><h4>Curriculum builder</h4><p>Designs Automation &amp; Robotics curricula, electives and project frameworks.</p></div>
+      <div><h4>Commercialiser</h4><p>Pushes lab work toward products, partners and patents.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec phil" id="philosophy">
+  <div class="wrap">
+    <div class="label" style="margin-bottom:28px"><b>//</b> 08 · creed</div>
+    <p class="kin" id="kin" aria-label="Engineering systems should be explainable, reproducible, and deployable."><span>Explainable.</span><span>Reproducible.</span><span>Deployable.</span></p>
+    <div class="phil-foot">
+      <p>Research without system thinking is incomplete.</p>
+      <div class="label">Dr. R. P. Tapaskar</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec contact" id="contact">
+  <div class="wrap">
+    <div class="label" style="margin-bottom:24px"><b>//</b> 09 · contact</div>
+    <h2>Open a <em>channel.</em></h2>
+    <div class="chan">
+      <div class="chan-row"><div class="label">Email</div><span class="v" id="e1">rptapaskar@gmail.com</span><button class="btn" type="button" data-copy="e1">Copy</button></div>
+      <div class="chan-row"><div class="label">University</div><span class="v" id="e2">rptapaskar@kletech.ac.in</span><button class="btn" type="button" data-copy="e2">Copy</button></div>
+      <div class="chan-row"><div class="label">LinkedIn</div><a class="v" href="https://www.linkedin.com/in/rakesh-tapaskar" target="_blank" rel="noopener">in/rakesh-tapaskar</a><a class="btn" href="https://www.linkedin.com/in/rakesh-tapaskar" target="_blank" rel="noopener">Open</a></div>
+      <div class="chan-row"><div class="label">GitHub</div><a class="v" href="https://github.com/rptapaskar" target="_blank" rel="noopener">github.com/rptapaskar</a><a class="btn" href="https://github.com/rptapaskar" target="_blank" rel="noopener">Follow</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="label">© 2026 Dr. Rakesh P. Tapaskar · CARR Lab, KLE Technological University</div>
+    <div class="label">Hubballi, Karnataka, India · 15.3647°N 75.1240°E</div>
+  </div>
+</footer>
+
+<script>
+(() => {
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FINE = matchMedia('(pointer: fine)').matches;
+const root = document.documentElement;
+const TH = {};
+function readTheme(){ const cs = getComputedStyle(root); ['fg','muted','accent','signal','gold'].forEach(k => TH[k] = cs.getPropertyValue('--' + k).trim()); TH.light = root.getAttribute('data-theme') === 'light'; }
+readTheme();
+
+(function theme(){
+  const btn = document.getElementById('themeBtn'), txt = document.getElementById('themeTxt');
+  const sync = () => { const l = root.getAttribute('data-theme') === 'light'; txt.textContent = l ? 'Light' : 'Dark'; btn.setAttribute('aria-label', l ? 'Switch to dark theme' : 'Switch to light theme'); readTheme(); };
+  btn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('rpt-theme', next); } catch (e) {}
+  });
+  new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  sync();
+})();
+
+(function boot(){
+  if (RM) return;
+  const el = document.getElementById('boot');
+  const cmd = '$ hud --boot --pilot dr_rocky', ok = '[OK] power 100% · all systems nominal';
+  let i = 0; el.innerHTML = '<span class="caret"></span>';
+  const t = setInterval(() => { i++; if (i <= cmd.length) el.innerHTML = cmd.slice(0, i) + '<span class="caret"></span>'; else { clearInterval(t); el.innerHTML = cmd + ' <span class="ok">' + ok + '</span><span class="caret"></span>'; } }, 22);
+})();
+(function scramble(){
+  if (RM) return;
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&<>/';
+  document.querySelectorAll('h1 .scr').forEach((el, k) => {
+    const fin = el.textContent; let f = 0; const total = 34 + k * 10;
+    el.style.minWidth = el.getBoundingClientRect().width + 'px';
+    (function tick(){ let out = ''; for (let i = 0; i < fin.length; i++) { const c = fin[i]; out += (c === ' ' || c === '.' || i < (f / total) * fin.length) ? c : chars[Math.random() * chars.length | 0]; } el.textContent = out; if (f++ < total) requestAnimationFrame(tick); else el.textContent = fin; })();
+  });
+})();
+
+(function hero(){
+  const hero = document.getElementById('hero'), cv = document.getElementById('heroCv'), ctx = cv.getContext('2d'), stage = document.getElementById('stage');
+  const WORDS = ['ENGINEER','INVENTOR','EDUCATOR','FOUNDER','DIRECTOR','DR. ROCKY'];
+  const wordTxt = document.getElementById('wordTxt'), wordIdx = document.getElementById('wordIdx'), rangeTxt = document.getElementById('rangeTxt');
+  let W = 0, H = 0, dpr = 1, P = [], wi = 0, visible = true, sTop = 0, sH = 0, MAXP = 2400, R = 220, lastW = -1;
+  const mouse = { x: -1e4, y: -1e4, on: false, last: -1e4 };
+  const B = 120, bins = new Float32Array(B);
+  function sample(word){
+    const oc = document.createElement('canvas'); oc.width = Math.max(1, Math.ceil(W)); oc.height = Math.max(1, Math.ceil(H));
+    const o = oc.getContext('2d'); const font = s => '900 ' + s + 'px "Big Shoulders Display", Impact, sans-serif';
+    let fs = sH * 0.98; o.font = font(fs);
+    const mw = o.measureText(word).width, maxW = W * 0.94; if (mw > maxW) { fs *= maxW / mw; o.font = font(fs); }
+    o.fillStyle = '#fff'; o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillText(word, W / 2, sTop + sH / 2 + fs * 0.04);
+    const d = o.getImageData(0, 0, oc.width, oc.height).data;
+    let step = Math.max(2, Math.round(fs / 34)), pts;
+    do { pts = []; for (let y = 0; y < oc.height; y += step) for (let x = 0; x < oc.width; x += step) if (d[(y * oc.width + x) * 4 + 3] > 128) pts.push([x, y]); step++; } while (pts.length > MAXP);
+    for (let i = pts.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; const t = pts[i]; pts[i] = pts[j]; pts[j] = t; }
+    return pts;
+  }
+  function setWord(i, burst){
+    const pts = sample(WORDS[i]);
+    for (let k = 0; k < P.length; k++) { const p = P[k];
+      if (k < pts.length) { p.tx = pts[k][0]; p.ty = pts[k][1]; p.free = false; } else { p.free = true; p.tx = Math.random() * W; p.ty = Math.random() * H; }
+      if (burst && !RM) { p.vx += (Math.random() - .5) * 14; p.vy += (Math.random() - .5) * 14; }
+      if (RM) { p.x = p.tx; p.y = p.ty; }
+    }
+    wordTxt.textContent = WORDS[i]; wordIdx.textContent = (i + 1) + '/' + WORDS.length;
+  }
+  function resize(){
+    dpr = Math.min(2, window.devicePixelRatio || 1); W = hero.clientWidth; H = hero.clientHeight;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    sTop = stage.offsetTop; sH = stage.offsetHeight; MAXP = W < 700 ? 1300 : 2400; R = W < 700 ? 140 : 220; rangeTxt.textContent = R + ' px';
+    if (P.length !== MAXP) { P = []; for (let i = 0; i < MAXP; i++) P.push({ x: Math.random() * W, y: Math.random() * H, vx: 0, vy: 0, tx: 0, ty: 0, free: true, a: Math.random() < 0.09 ? 1 : (Math.random() < 0.08 ? 2 : 0) }); }
+    setWord(wi, false); if (RM) draw(performance.now());
+  }
+  function draw(t){
+    ctx.clearRect(0, 0, W, H);
+    let sx, sy; const live = mouse.on && (t - mouse.last < 2500);
+    if (live) { sx = mouse.x; sy = mouse.y; } else { sx = W * (0.5 + 0.4 * Math.sin(t * 0.00027)); sy = sTop + sH * (0.5 + 0.42 * Math.sin(t * 0.00049 + 1.3)); }
+    if (RM) { sx = -1e4; sy = -1e4; }
+    bins.fill(R);
+    const rr = live ? 90 : 0, rr2 = rr * rr, R2 = R * R, sz = W < 700 ? 1.6 : 1.9;
+    const gN = [], gA = [], gS = [], gF = [], gG = [];
+    for (let i = 0; i < P.length; i++) { const p = P[i];
+      if (!RM) {
+        if (p.free) { p.tx += (Math.random() - .5) * 1.2; p.ty += (Math.random() - .5) * 1.2; if (p.tx < 0) p.tx = W; if (p.tx > W) p.tx = 0; if (p.ty < 0) p.ty = H; if (p.ty > H) p.ty = 0; p.vx = (p.vx + (p.tx - p.x) * 0.0015) * 0.96; p.vy = (p.vy + (p.ty - p.y) * 0.0015) * 0.96; }
+        else { p.vx = (p.vx + (p.tx - p.x) * 0.05) * 0.8; p.vy = (p.vy + (p.ty - p.y) * 0.05) * 0.8; }
+        if (rr) { const dx = p.x - sx, dy = p.y - sy, d2 = dx * dx + dy * dy; if (d2 < rr2 && d2 > 0.01) { const d = Math.sqrt(d2), f = (1 - d / rr) * 3.2; p.vx += dx / d * f; p.vy += dy / d * f; } }
+        p.x += p.vx; p.y += p.vy;
+      }
+      const dx = p.x - sx, dy = p.y - sy, d2 = dx * dx + dy * dy;
+      if (!p.free && d2 < R2) { const d = Math.sqrt(d2), b = Math.floor((Math.atan2(dy, dx) + Math.PI) / (2 * Math.PI) * B) % B; if (d < bins[b]) bins[b] = d; gS.push(i); }
+      else if (p.free) gF.push(i); else if (p.a === 1) gA.push(i); else if (p.a === 2) gG.push(i); else gN.push(i);
+    }
+    const paint = (arr, col, s, a) => { if (!arr.length) return; ctx.globalAlpha = a; ctx.fillStyle = col; ctx.beginPath(); for (const i of arr) ctx.rect(P[i].x, P[i].y, s, s); ctx.fill(); ctx.globalAlpha = 1; };
+    paint(gF, TH.muted, 1.2, .4); paint(gN, TH.fg, sz, .92); paint(gA, TH.accent, sz, 1); paint(gG, TH.gold, sz, 1); paint(gS, TH.signal, sz, 1);
+    if (RM) return;
+    ctx.strokeStyle = TH.signal; ctx.globalAlpha = TH.light ? .22 : .15; ctx.lineWidth = 1; ctx.beginPath();
+    for (let b = 0; b < B; b++) { const a = (b + .5) / B * 2 * Math.PI - Math.PI, d = bins[b]; ctx.moveTo(sx, sy); ctx.lineTo(sx + Math.cos(a) * d, sy + Math.sin(a) * d); }
+    ctx.stroke(); ctx.globalAlpha = 1;
+    ctx.fillStyle = TH.signal; ctx.beginPath();
+    for (let b = 0; b < B; b++) { if (bins[b] >= R) continue; const a = (b + .5) / B * 2 * Math.PI - Math.PI, d = bins[b]; ctx.rect(sx + Math.cos(a) * d - 1.5, sy + Math.sin(a) * d - 1.5, 3, 3); }
+    ctx.fill();
+    ctx.strokeStyle = TH.signal; ctx.globalAlpha = .3; ctx.setLineDash([3, 6]); ctx.beginPath(); ctx.arc(sx, sy, R, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+    const sa = t * 0.0035; ctx.globalAlpha = .7; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + Math.cos(sa) * R, sy + Math.sin(sa) * R); ctx.stroke();
+    ctx.globalAlpha = 1; ctx.lineWidth = 1;
+    ctx.fillStyle = TH.accent; ctx.beginPath(); ctx.arc(sx, sy, 4, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = TH.accent; ctx.globalAlpha = .6; ctx.beginPath(); ctx.arc(sx, sy, 10 + 3 * Math.sin(t * .006), 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  function frame(t){ requestAnimationFrame(frame); if (visible) draw(t); }
+  hero.addEventListener('pointermove', e => { const r = hero.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.on = true; mouse.last = performance.now(); });
+  hero.addEventListener('pointerleave', () => { mouse.on = false; });
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(hero);
+  new MutationObserver(() => { if (RM) { readTheme(); draw(performance.now()); } }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (hero.clientWidth !== lastW) { lastW = hero.clientWidth; resize(); } }, 150); });
+  let started = false;
+  const go = () => { if (started) return; started = true; lastW = hero.clientWidth; resize(); if (!RM) { requestAnimationFrame(frame); setInterval(() => { if (!visible) return; wi = (wi + 1) % WORDS.length; setWord(wi, true); }, 3600); } };
+  const fl = (document.fonts && document.fonts.load) ? document.fonts.load('900 120px "Big Shoulders Display"') : Promise.resolve();
+  fl.then(go, go); setTimeout(go, 1500);
+})();
+
+(function ticks(){
+  const g = document.getElementById('ticks'); let s = '';
+  for (let i = 0; i < 72; i++) { const a = i / 72 * Math.PI * 2, r1 = i % 6 ? 178 : 172, r2 = 184; s += '<line x1="' + (200 + Math.cos(a) * r1).toFixed(2) + '" y1="' + (200 + Math.sin(a) * r1).toFixed(2) + '" x2="' + (200 + Math.cos(a) * r2).toFixed(2) + '" y2="' + (200 + Math.sin(a) * r2).toFixed(2) + '" stroke-width="' + (i % 6 ? 1 : 2) + '"/>'; }
+  g.innerHTML = s;
+})();
+
+(function ui(){
+  if (FINE && !RM) {
+    document.querySelectorAll('.card,.gear').forEach(c => {
+      c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; c.style.setProperty('--mx', x * 100 + '%'); c.style.setProperty('--my', y * 100 + '%'); c.style.transform = 'perspective(900px) rotateX(' + ((.5 - y) * 7).toFixed(2) + 'deg) rotateY(' + ((x - .5) * 9).toFixed(2) + 'deg)'; });
+      c.addEventListener('pointerleave', () => { c.style.transform = ''; });
+    });
+  }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .4 });
+  document.querySelectorAll('.sec-head').forEach(h => io.observe(h));
+  const cio = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting || RM) return; cio.unobserve(e.target);
+    const el = e.target, n = +el.dataset.n, t0 = performance.now();
+    (function step(t){ const k = Math.min(1, (t - t0) / 1300); el.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); })(t0);
+  }), { threshold: .6 });
+  document.querySelectorAll('.stat b[data-n]').forEach(b => cio.observe(b));
+
+  const kin = document.getElementById('kin'), words = kin.querySelectorAll('span'), fill = document.getElementById('odoFill'), otxt = document.getElementById('odoTxt');
+  function onScroll(){
+    const vh = innerHeight, r = kin.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, (vh * .9 - r.top) / (r.height + vh * .35)));
+    if (!RM) words.forEach((w, i) => w.style.setProperty('--f', Math.min(1, Math.max(0, p * 3.2 - i)).toFixed(3)));
+    const max = document.documentElement.scrollHeight - vh, s = max > 0 ? scrollY / max : 0;
+    fill.style.height = (s * 100).toFixed(1) + '%'; otxt.textContent = 'ODOM ' + (scrollY / 1000).toFixed(2) + ' m';
+  }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  if (RM) words.forEach(w => w.style.setProperty('--f', 1));
+
+  document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => {
+    const el = document.getElementById(b.dataset.copy), txt = el.textContent;
+    const done = ok => { b.textContent = ok ? 'Copied' : 'Selected'; setTimeout(() => { b.textContent = 'Copy'; }, 1600); };
+    const sel = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); done(false); };
+    try { navigator.clipboard.writeText(txt).then(() => done(true), sel); } catch (e) { sel(); }
+  }));
+
+  if (FINE && !RM) {
+    const ret = document.getElementById('reticle'), xy = document.getElementById('retxy'); let tx = 0, ty = 0, x = 0, y = 0;
+    addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; ret.classList.add('on'); ret.classList.toggle('big', !!e.target.closest('a,button,.card,.gear,.reactor')); });
+    document.addEventListener('pointerleave', () => ret.classList.remove('on'));
+    (function f(){ x += (tx - x) * .22; y += (ty - y) * .22; ret.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)'; xy.textContent = 'x ' + Math.round(tx) + ' · y ' + Math.round(ty); requestAnimationFrame(f); })();
+  }
+
+  const tk = document.getElementById('ticker'); const n = tk.children.length; tk.innerHTML += tk.innerHTML;
+  Array.from(tk.children).forEach((s, i) => { if (i >= n) s.setAttribute('aria-hidden', 'true'); });
+})();
+})();
+</script>
+
+</body>
+</html>
